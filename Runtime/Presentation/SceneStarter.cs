@@ -8,26 +8,20 @@ namespace ShalicoLib.Presentation
 {
     public abstract class SceneStarter<TContext> : IAsyncStartable
     {
-        private readonly AsyncStorage<TContext> _contextStorage;
+        private readonly IReadOnlyAsyncStorage<TContext> _contextStorage;
 
         [Inject]
-        protected SceneStarter(AsyncStorage<TContext> contextStorage)
+        protected SceneStarter(IReadOnlyAsyncStorage<TContext> contextStorage)
         {
             _contextStorage = contextStorage;
         }
 
         public async UniTask StartAsync(CancellationToken cancellation)
         {
-            if (_contextStorage.HasContent)
-            {
-                var context = await _contextStorage.Get(cancellation);
-
+            if (_contextStorage.TryGet(out var context))
                 await StartWithContextAsync(context, cancellation);
-            }
             else
-            {
                 await StartWithoutContextAsync(cancellation);
-            }
         }
 
         protected abstract UniTask StartWithContextAsync(TContext context, CancellationToken cancellation);
