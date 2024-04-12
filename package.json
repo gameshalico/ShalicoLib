@@ -1,0 +1,10 @@
+﻿{
+  "name": "com.gameshalico.shalico-lib",
+  "displayName": "Shalico Lib",
+  "description": "",
+  "version": "1.0.0",
+  "author": {
+    "name": "Gameshalico",
+    "url": "https://gameshalico.com"
+  }
+}
