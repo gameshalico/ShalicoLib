@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Packages.ShalicoLib.Model;
 using VContainer;
 using VContainer.Unity;
 

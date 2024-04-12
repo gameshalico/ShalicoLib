@@ -2,7 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace ShalicoLib.Presentation
+namespace Packages.ShalicoLib.Model
 {
     public class AsyncStorage<TContent>
     {
