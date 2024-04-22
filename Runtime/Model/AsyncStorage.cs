@@ -11,15 +11,9 @@ namespace Packages.ShalicoLib.Model
         bool TryGet(out TContent content);
     }
 
-    public class AsyncStorage<TContent> : IReadOnlyAsyncStorage<TContent>, IDisposable
+    public class AsyncStorage<TContent> : IReadOnlyAsyncStorage<TContent>
     {
         private readonly UniTaskCompletionSource<TContent> _completionSource = new();
-
-        public void Dispose()
-        {
-            if (!HasContent)
-                _completionSource.TrySetException(new ObjectDisposedException(nameof(AsyncStorage<TContent>)));
-        }
 
         public bool HasContent { get; private set; }
 
@@ -47,24 +41,21 @@ namespace Packages.ShalicoLib.Model
         {
             if (HasContent) return false;
             HasContent = true;
-            _completionSource.TrySetResult(content);
-            return true;
+            return _completionSource.TrySetResult(content);
         }
 
         public bool TrySetException(Exception exception)
         {
             if (HasContent) return false;
             HasContent = true;
-            _completionSource.TrySetException(exception);
-            return true;
+            return _completionSource.TrySetException(exception);
         }
 
         public bool TryCancel()
         {
             if (HasContent) return false;
             HasContent = true;
-            _completionSource.TrySetCanceled();
-            return true;
+            return _completionSource.TrySetCanceled();
         }
     }
 }
