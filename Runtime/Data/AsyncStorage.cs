@@ -2,22 +2,15 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Packages.ShalicoLib.Model
+namespace ShalicoLib.Data
 {
-    public interface IReadOnlyAsyncStorage<TContent>
-    {
-        bool HasContent { get; }
-        UniTask<TContent> Get(CancellationToken cancellationToken = default);
-        bool TryGet(out TContent content);
-    }
-
     public class AsyncStorage<TContent> : IReadOnlyAsyncStorage<TContent>
     {
         private readonly UniTaskCompletionSource<TContent> _completionSource = new();
 
         public bool HasContent { get; private set; }
 
-        public async UniTask<TContent> Get(CancellationToken cancellationToken = default)
+        public async UniTask<TContent> GetAsync(CancellationToken cancellationToken = default)
         {
             return await _completionSource.Task.AttachExternalCancellation(cancellationToken);
         }

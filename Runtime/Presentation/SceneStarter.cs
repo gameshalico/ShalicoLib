@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Packages.ShalicoLib.Model;
+using ShalicoLib.Data;
 using VContainer;
 using VContainer.Unity;
 
@@ -8,10 +8,10 @@ namespace ShalicoLib.Presentation
 {
     public abstract class SceneStarter<TContext> : IAsyncStartable
     {
-        private readonly IReadOnlyAsyncStorage<TContext> _contextStorage;
+        private readonly IReadOnlyStorage<TContext> _contextStorage;
 
         [Inject]
-        protected SceneStarter(IReadOnlyAsyncStorage<TContext> contextStorage)
+        protected SceneStarter(IReadOnlyStorage<TContext> contextStorage)
         {
             _contextStorage = contextStorage;
         }
