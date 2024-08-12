@@ -19,15 +19,12 @@ namespace Packages.ShalicoLib.Model
 
         public async UniTask<TContent> Get(CancellationToken cancellationToken = default)
         {
-            var result = await UniTask.WhenAny(_completionSource.Task, cancellationToken.ToUniTask().Item1);
-            if (result.hasResultLeft) return result.result;
-
-            throw new OperationCanceledException();
+            return await _completionSource.Task.AttachExternalCancellation(cancellationToken);
         }
 
         public bool TryGet(out TContent content)
         {
-            if (_completionSource.Task.Status != UniTaskStatus.Succeeded)
+            if (!HasContent || _completionSource.Task.Status != UniTaskStatus.Succeeded)
             {
                 content = default;
                 return false;
