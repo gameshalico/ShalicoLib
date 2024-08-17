@@ -29,5 +29,10 @@
             Content = default;
             HasContent = false;
         }
+
+        public static implicit operator T(Storage<T> storage)
+        {
+            return storage.Content;
+        }
     }
 }
